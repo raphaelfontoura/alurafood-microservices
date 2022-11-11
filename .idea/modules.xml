@@ -3,6 +3,7 @@
   <component name="ProjectModuleManager">
     <modules>
       <module fileurl="file://$PROJECT_DIR$/.idea/alura-food.iml" filepath="$PROJECT_DIR$/.idea/alura-food.iml" />
+      <module fileurl="file://$PROJECT_DIR$/aws-infra/aws-infra.iml" filepath="$PROJECT_DIR$/aws-infra/aws-infra.iml" />
       <module fileurl="file://$PROJECT_DIR$/gateway/gateway.iml" filepath="$PROJECT_DIR$/gateway/gateway.iml" />
       <module fileurl="file://$PROJECT_DIR$/pagamentos/pagamentos.iml" filepath="$PROJECT_DIR$/pagamentos/pagamentos.iml" />
       <module fileurl="file://$PROJECT_DIR$/pedidos/pedidos.iml" filepath="$PROJECT_DIR$/pedidos/pedidos.iml" />
