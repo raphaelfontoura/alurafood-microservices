@@ -19,6 +19,8 @@ Enjoy!
 
 ## Configure
 
+environment AWS_PROFILE to set profile from .aws config and credentials.
+
 `cdk bootstrap`
 
 `cdk list`
