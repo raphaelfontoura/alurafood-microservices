@@ -2,6 +2,8 @@ package br.com.alurafood.pagamentos.controller;
 
 import br.com.alurafood.pagamentos.dto.PagamentoDto;
 import br.com.alurafood.pagamentos.service.PagamentoService;
+import com.fasterxml.jackson.core.JsonProcessingException;
+import com.fasterxml.jackson.databind.ObjectMapper;
 import io.github.resilience4j.circuitbreaker.annotation.CircuitBreaker;
 import org.springframework.amqp.core.Message;
 import org.springframework.amqp.rabbit.core.RabbitTemplate;
@@ -45,12 +47,11 @@ public class PagamentoController {
     }
 
     @PostMapping
-    public ResponseEntity<PagamentoDto> create(@RequestBody @Valid PagamentoDto dto, UriComponentsBuilder uriBuilder) {
+    public ResponseEntity<PagamentoDto> create(@RequestBody @Valid PagamentoDto dto, UriComponentsBuilder uriBuilder) throws JsonProcessingException {
         PagamentoDto pagamento = service.createPagamento(dto);
         URI uri = uriBuilder.path("/pagamentos/{id}").buildAndExpand(pagamento.getId()).toUri();
 
-        Message message = new Message(("Criei um pagamento com o ID " + pagamento.getId()).getBytes());
-        rabbitTemplate.send("pagamento.concluido", message);
+        rabbitTemplate.convertAndSend("pagamento.concluido", pagamento);
 
         return ResponseEntity.created(uri).body(pagamento);
     }
