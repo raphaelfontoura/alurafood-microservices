@@ -2,7 +2,11 @@ package br.com.alurafood.pagamentos.controller;
 
 import br.com.alurafood.pagamentos.dto.PagamentoDto;
 import br.com.alurafood.pagamentos.service.PagamentoService;
+import com.fasterxml.jackson.core.JsonProcessingException;
+import com.fasterxml.jackson.databind.ObjectMapper;
 import io.github.resilience4j.circuitbreaker.annotation.CircuitBreaker;
+import org.springframework.amqp.core.Message;
+import org.springframework.amqp.rabbit.core.RabbitTemplate;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
@@ -22,6 +26,9 @@ public class PagamentoController {
     @Autowired
     private PagamentoService service;
 
+    @Autowired
+    private RabbitTemplate rabbitTemplate;
+
     @GetMapping
     public Page<PagamentoDto> getAll(@PageableDefault(size = 10) Pageable pageable) {
         return service.getAll(pageable);
@@ -40,9 +47,11 @@ public class PagamentoController {
     }
 
     @PostMapping
-    public ResponseEntity<PagamentoDto> create(@RequestBody @Valid PagamentoDto dto, UriComponentsBuilder uriBuilder) {
+    public ResponseEntity<PagamentoDto> create(@RequestBody @Valid PagamentoDto dto, UriComponentsBuilder uriBuilder) throws JsonProcessingException {
         PagamentoDto pagamento = service.createPagamento(dto);
         URI uri = uriBuilder.path("/pagamentos/{id}").buildAndExpand(pagamento.getId()).toUri();
+
+        rabbitTemplate.convertAndSend("pagamentos.ex", "", pagamento);
 
         return ResponseEntity.created(uri).body(pagamento);
     }

@@ -9,11 +9,13 @@
         <module name="server" />
         <module name="pedidos" />
         <module name="aws-infra" />
+        <module name="avaliacao" />
         <module name="pagamentos" />
         <module name="gateway" />
       </profile>
     </annotationProcessing>
     <bytecodeTargetLevel>
+      <module name="avaliacao" target="17" />
       <module name="aws-infra" target="1.8" />
       <module name="gateway" target="17" />
       <module name="pagamentos" target="17" />
@@ -23,6 +25,7 @@
   </component>
   <component name="JavacSettings">
     <option name="ADDITIONAL_OPTIONS_OVERRIDE">
+      <module name="avaliacao" options="-parameters" />
       <module name="gateway" options="-parameters" />
       <module name="pagamentos" options="-parameters" />
       <module name="pedidos" options="-parameters" />

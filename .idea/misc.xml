@@ -8,6 +8,7 @@
         <option value="$PROJECT_DIR$/pagamentos/pom.xml" />
         <option value="$PROJECT_DIR$/gateway/pom.xml" />
         <option value="$PROJECT_DIR$/aws-infra/pom.xml" />
+        <option value="$PROJECT_DIR$/avaliacao/pom.xml" />
       </list>
     </option>
   </component>
